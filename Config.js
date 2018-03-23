@@ -3,13 +3,13 @@
  * @type {{context: string, entry: {panel: string[]}}}
  */
 
-const moduleName = 'finance';//todo:静态资源目录名称,需要修改
+const moduleName = 'react-pro';//todo:静态资源目录名称,需要修改
 
 module.exports = {
-  title: '支付订单管理', //todo:需要修改
+  title: 'react练习项目', //todo:需要修改
   context: `/${moduleName}`, //todo:二级目录
   moduleName,
-  pathInMappingJson: `//static.bkjk.com/alpha/${moduleName}/`,
+  //pathInMappingJson: ,   //静态资源的地址
   entry: {
     vendor: [
       'react',
