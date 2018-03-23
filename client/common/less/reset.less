@@ -1,0 +1,117 @@
+@import "variables";
+/**
+ * reset css
+ * 参考 normalize.css github.com/necolas/normalize.css
+ *
+ */
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: @font-family-sans-serif;
+  -webkit-font-smoothing: antialiased; //抗锯齿
+  background-color: @color-weak2;
+}
+
+body {
+  font-size: @font-size-14;
+  color: @color-black3;
+  -webkit-touch-callout: none;
+  -webkit-touch-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(200,200,200,0);
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;  //解决ios 中页面滑动卡顿的问题
+}
+html, body, #main, #layout {
+  height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  &:after {
+    box-sizing: border-box;
+  }
+  &:before {
+    box-sizing: border-box;
+  }
+}
+
+input[type="number"] {
+   -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+// 防止点击出现透明遮罩
+input,
+textarea,
+button,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a {
+  color: @color-main;
+  text-decoration: none;
+  &:hover {
+    outline: 0;
+  }
+  &:active {
+    outline: 0;
+  }
+}
+
+img {
+  border: none;
+}
+
+// Forms
+// ==========================================================================
+// 1. Correct color not being inherited.
+//    Known issue: affects color of disabled elements.
+// 2. Correct font properties not being inherited.
+// 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+//
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-size: @font-size-14;
+  color: inherit; // 1
+  font: inherit; // 2
+  margin: 0; // 3
+  outline: none;
+  border: none;
+  background: none; //transparent
+}
+
+select{
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  //background: url("../images/icon_list_arrow_down.png") no-repeat scroll right center transparent;
+  background-size: 11px;
+}
+
+// Tables
+// ==========================================================================
+// Remove most spacing between table cells.
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+li {
+  list-style: none;
+}

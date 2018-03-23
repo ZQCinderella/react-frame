@@ -1,0 +1,50 @@
+/**
+ * 布局
+ */
+
+.container {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.center{
+  text-align: center;
+}
+
+.clearfix {
+  &:after {
+    display: table;
+    content: ' ';
+    clear: both;
+  }
+
+  &:before {
+    display: table;
+    content: ' ';
+  }
+}
+
+#main {
+  .hide {
+    display: none;
+  }
+  .show {
+    display: block;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.hidden-with-width {
+  visibility: hidden !important;
+}

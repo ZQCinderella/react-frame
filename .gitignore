@@ -1,0 +1,12 @@
+.idea
+node_modules
+dist
+public/cached
+public/dist
+npm-debug.log
+.DS_Store
+.vscode
+*/**/.DS_Store
+yarn.lock
+
+

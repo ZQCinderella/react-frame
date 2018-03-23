@@ -1,0 +1,80 @@
+/* 1px hack */
+.border1px{
+  position: relative;
+}
+.border1px::after{
+  content: " ";
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  border: 1px solid #ededed;
+  transform-origin: top left;
+  transform: scale(0.5);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.bor-top1px{
+  position: relative;
+}
+.bor-top1px::after{
+  content: " ";
+  width: 200%;
+  height: 1px;
+  position: absolute;
+  border-top: 1px solid #ededed;
+  transform-origin: top left;
+  transform: scale(0.5);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.bor-bottom1px{
+  position: relative;
+}
+.bor-bottom1px::after{
+  content: " ";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  border-bottom: 1px solid #ededed;
+  transform-origin: top left;
+  transform: scale(1, 0.5);
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.bor-left1px{
+  position: relative;
+}
+.bor-left1px::after{
+  content: " ";
+  width: 200%;
+  height: 1px;
+  position: absolute;
+  border-left: 1px solid #ededed;
+  transform-origin: top left;
+  transform: scale(0.5);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.bor-right1px{
+  position: relative;
+}
+.bor-right1px::after{
+  content: " ";
+  width: 200%;
+  height: 1px;
+  position: absolute;
+  border-right: 1px solid #ededed;
+  transform-origin: top left;
+  transform: scale(0.5);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}

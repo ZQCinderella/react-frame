@@ -1,0 +1,87 @@
+@import '../../common/less/variables';
+@import '../../common/less/util';
+
+@buttonHeight: .8rem;
+
+.f-modal-dom{
+  .flex;
+  .boxCenter;
+  .fixedMask;
+}
+.f-modal-mask{
+  .fixedMask;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+//content
+.f-modal-container{
+  width: 5.5rem;
+  min-height: 4rem;
+  padding: .6rem .4rem 0;
+  text-align: center;
+  border-radius: .2rem;
+  background-color: #fff;
+  animation: modalAni .6s;
+  position: relative;
+  z-index: 10000;
+  .f-modal-title{
+    margin-bottom: .3rem;
+  }
+  .f-modal-content{
+    margin-bottom: .3rem;
+    max-height: 4rem;
+    overflow: scroll;
+  }
+}
+@keyframes modalAni {
+  from, 0%, 50%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.710, 0.455, 1.000);
+  }
+  from, 0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+//填充footer高度的dom
+.footer-seat{
+  height: @buttonHeight;
+  width: 100%;
+  background-color: transparent;
+}
+
+
+//footer
+.f-modal-footer{
+  .flex;
+  .boxCenter;
+  border-top: 1px solid @color-weak1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  border-bottom-left-radius: .2rem;
+  border-bottom-right-radius: .2rem;
+  background-color: #fff;
+  .m-btn{
+    .flexBox;
+    height: @buttonHeight;
+    line-height: .8rem;
+    &.cancel{
+      color: @color-black6; 
+    }
+    &.confirm{
+      color: #fff;
+      background-color: @color-main;
+    }
+  }
+}

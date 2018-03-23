@@ -1,0 +1,61 @@
+@import '../../common/less/variables.less';
+
+.f-btn{
+  display: inline-block;
+  opacity: .9;
+  font-weight: 400;
+  line-height: 1.4285;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: .08rem;
+  outline: none;
+  margin: .06rem;
+  &:hover{
+    opacity: 1;
+  }
+
+
+  //尺寸
+  &.btn-sm{
+    padding: .1rem .2rem;
+  }
+  &.btn-md{
+    padding: .12rem .24rem;
+  }
+  &.btn-lg{
+    padding: .2rem .32rem;
+  }
+  
+
+  // type
+  &.default{
+    color: #333;
+    border-color: #ccc;
+    background-color: #fff;
+    &:hover{
+      background-color: #eee;
+    }
+  }
+  &.primary{
+    border-color: #108ee9;
+    background-color: #108ee9; 
+  }
+  &.info{
+    border-color: #46b8da;
+    background-color: #46b8da;
+  }
+  &.danger{
+    border-color: #d9534f;
+    background-color: #d9534f;
+  }
+  &.primary, &.info, &.danger {
+    color: #fff;
+  }
+  // 是否可用
+  &.btn-disabled{
+    opacity: .4;
+    cursor: not-allowed;
+  }
+}

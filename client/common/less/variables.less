@@ -1,0 +1,74 @@
+// 字体
+@font-family-sans-serif: 'PingFangSC-Light', 'STHeiti', 'Microsoft YaHei', 'SimSun', 'Arial' !important;
+@font-family-serif: Georgia, "Times New Roman", Times, serif;
+@font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+@font-family-base: @font-family-sans-serif;
+
+@font-size-base: 0.28rem;
+
+@font-size-21: .42rem; // ~21px
+@font-size-22: .44rem; //~22px
+@font-size-18: .36rem; // ~18px
+@font-size-17: .34rem; // ~17px
+@font-size-16: .32rem; // ~16px
+@font-size-30: 0.6rem; // ~30px
+@font-size-32: 0.64rem; // ~30px
+@font-size-36: 0.72rem; // ~30px
+@font-size-14: @font-size-base;
+@font-size-12: .24rem; // ~12px
+
+// 颜色
+@color-red: #F96464;
+@color-main: #59A3FF;
+@color-black3: #333333;
+@color-black6: #666666;
+@color-black9: #999999;
+@color-weak0: rgba(153,153,153,0.16); //#999 16%
+@color-weak1: #E5E5E5;
+@color-weak2: #F7F8FA;
+@color-weak3: #F6F6F6;
+@color-white: #FFFFFF;
+
+
+@padding-slide: .6rem; //对应设计稿上60px的左间距
+
+h1{
+  font-size: @font-size-22;
+}
+h2, .font18{
+  font-size: @font-size-18;
+}
+h3, .font16{
+  font-size: @font-size-16;
+}
+h4, .font14{
+  font-weight: normal;
+  font-size: @font-size-14;
+}
+h5, .font12{
+  font-weight: normal;
+  font-size: @font-size-12;
+}
+.padding-lr{
+  padding: 0 @padding-slide;
+}
+
+.color9{
+  color: @color-black9;
+}
+
+.color6{
+  color: @color-black6;
+}
+
+.color3{
+  color: @color-black3;
+}
+
+.color-white{
+  color: @color-white;
+}
+
+.bg-white{
+  background-color: @color-white;
+}
