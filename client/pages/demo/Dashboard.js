@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 
-import { Button, Modal, Radio, RadioGroup } from '../../components/';
+import { Button, Modal, Radio, RadioGroup, Checkbox, BackToTop, EnterPasswd } from '../../components/';
 import './Dashboard.less'
 
-const propTypes = {
-
-}
 class Dashboard extends Component {
   constructor(options) {
     super(options)
@@ -47,6 +44,24 @@ class Dashboard extends Component {
   getRadioValue = (obj) => {
     console.log(obj);
   }
+  getPayPwd = (pwd) => {
+    if (pwd !== '123456') {
+      console.log(pwd);
+      this.setState({
+        modalVisible: true
+      });
+    } else {
+      this.setState({
+        clearPwd: false
+      });
+    }
+  }
+  handleOnConfirm = () => {
+    this.setState({
+      modalVisible: false,
+      clearPwd: true
+    });
+  }
   render() {
     const { showAlert, text, modalVisible } = this.state;
     return (
@@ -66,28 +81,26 @@ class Dashboard extends Component {
         <Modal
           visible={modalVisible}
           title="各位市民注意了"
-          content={`北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北
-          京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了
-          北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨
-          了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨
-          了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨了北京可能要下雨
-          了北京可能要下雨了北京可能要下雨了北京可能要下雨了`}
+          content="确定清楚密码吗？"
           maskClosable
           btns={[
             { text: '取消', cls: 'cancel', role: 'close', onClick: this.onCancel },
-            { text: '确定', cls: 'confirm', onClick: this.onCancel }
+            { text: '确定', cls: 'confirm', onClick: this.handleOnConfirm }
           ]}
         />
         <Radio id="radio-1" text='西瓜' checked={this.state.checked} onChange={this.radioChange} />
         <RadioGroup
           id="r-g-a"
-          radios={[{ id: 'a', text: 'a', disabled: true }, { id: 'b', text: 'b' }]}
+          radios={[{ id: 'a', text: '哈哈', disabled: true }, { id: 'b', text: '嘻嘻' }, { id: 'c', text: '呵呵' }]}
           checkedId="a"
           getValue={this.getRadioValue}
         />
+        <Checkbox id="checkbox-1" list={[{id: 'a', text: 'a'}, {id: 'b', text: 'b', checked: true}]}/>
+        <BackToTop triggerBoundary="200" backTimeNeeded="2"/>
+        <EnterPasswd getValue={this.getPayPwd} clear={this.state.clearPwd}/>
+        <div style={{height: '500000px'}}></div>
       </div>
     )
   }
 }
-Dashboard.propTypes = propTypes;
 export default Dashboard

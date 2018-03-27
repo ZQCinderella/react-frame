@@ -25,7 +25,6 @@ class RadioGroup extends Component {
   }
   render() {
     const { checkedId } = this.state;
-    console.log(checkedId);
     const { radios, style, cls } = this.props;
     return (
       <div className={cls} style={style}>

@@ -26,9 +26,6 @@ class Radio extends Component {
   clickRadio = () => {
     const { disabled, id, onChange } = this.props;
     if (disabled) return;
-    this.setState({
-      checked: true
-    });
     if (onChange) onChange(id); 
   }
   render() {
@@ -39,7 +36,7 @@ class Radio extends Component {
         <div className={classnames('f-radio-circle', { checked, disabled })}>
           <span className="f-radio-dot"></span>
         </div>
-        <span>{text}</span>
+        <span className="f-radio-text">{text}</span>
       </div>
     );
   }

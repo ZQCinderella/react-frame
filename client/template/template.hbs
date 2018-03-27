@@ -14,13 +14,13 @@
     body,
     #layout {
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       overflow-y: auto;
     }
   </style>
 </head>
 
-<body>
+<body style="height: auto; min-height: 100%;">
   <div id="layout" class="ant-layout ant-layout-has-sider">
     <div id="sider" class="ant-layout-sider" style="flex: 0 0 180px; width: 180px;"></div>
     <div class="ant-layout" style="overflow-y: auto">
@@ -64,7 +64,6 @@
       function _getNewFontSize() {
         //var scale = designHeight !== 0 ? Math.min(win.innerWidth / designWidth, win.innerHeight / designHeight) : win.innerWidth / designWidth;
         var scale = (window.innerWidth) / designWidth;
-        console.log(window.innerWidth);
         return parseInt(scale * 10000 * designFontSize) / 10000;
       }
 

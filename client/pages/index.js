@@ -1,7 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
-import {Route, IndexRoute} from 'react-router';
-import {combineReducers} from 'redux-immutable';
+import { Route, IndexRoute } from 'react-router';
+import { combineReducers } from 'redux-immutable';
+import { ErrorBoundary } from '../components/'
 
 const URL_CONTEXT = require('../../Config').context;
 /**
@@ -15,7 +16,7 @@ import Test from './index/Test';
 const routes = (
   <Route path="/" breadcrumbName="主页" icon="home" component={App}>
     <IndexRoute breadcrumbName="控制面板" icon="laptop" component={Dashboard} />
-    <Route path='test(:name)' component={Test} breadcrumbName="test" ></Route>  
+    <Route path='test(:name)' component={Test} breadcrumbName="test" ></Route>
   </Route>
 );
 
@@ -37,6 +38,8 @@ const reducers = combineReducers({
  */
 import Root from '../Root'
 render(
-  <Root routes={routes} reducers={reducers} basename={`${URL_CONTEXT}`} />,
+  <ErrorBoundary>
+    <Root routes={routes} reducers={reducers} basename={`${URL_CONTEXT}`} />
+  </ErrorBoundary>,
   document.getElementById('main')
 );

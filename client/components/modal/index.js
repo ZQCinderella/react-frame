@@ -22,6 +22,7 @@ class Modal extends Component {
     fn && fn(e);
   }
   renderModalHtml = () => {
+    console.log('hahah');
     const { children, cls, style, title, content, btns } = this.props;
     return (
       <div className="f-modal-dom">
@@ -57,8 +58,10 @@ class Modal extends Component {
     const { visible } = this.props;
     // createPortal创造的组件是可以独立于body的直接子元素的
     if (visible) {
+      document.body.style.height = '100%';
       return createPortal(this.renderModalHtml(), document.body);
     }
+    document.body.style.height = 'auto';
     return null;
   }
 }

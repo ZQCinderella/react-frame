@@ -1,7 +1,8 @@
 import 'isomorphic-fetch';
 import 'fetch-ie8';
-import {context, moduleName} from '../../Config';
-import perfect from './perfect';
+import {stringifyJSON} from './perfect';
+import AppApi from './appApi';
+import {context} from '../../Config';
 // 定义 fetch 默认选项， 看 https://github.com/github/fetch
 const defaultOptions = {
   credentials: 'include', //设置该属性可以把 cookie 信息传到后台
@@ -31,81 +32,72 @@ function checkStatus(response) {
  * @param options // 可选参数项
  * @returns {Promise.<TResult>}
  */
-function post(url, body = {}, method = 'post', options = {}) {
+function callApiFn(url, body = {}, method = 'get', options = {}) {
   if (!url) {
     const error = new Error('请传入 url');
     error.errorCode = 0;
     return Promise.reject(error);
   }
 
-  const fullUrl = '/query';
-  const _options = {method: 'post', ...defaultOptions, ...options};
-  Object.keys(body).forEach((item) => {
-    if (body[item] === null || body[item] === '') {
-      delete body[item];
-    }
-  });
-  const obj = {
-    module: moduleName,
-    path: url,
-    filter: body
+  let fullUrl = url;
+  if (context) {
+    fullUrl = `/${url.replace(/^\//, '')}`;
   }
-  _options.body = perfect.stringifyJSON(obj);
+
+  const _options = {method, ...defaultOptions, ...options};
+
+  if (method !== 'get' && method !== 'head') {
+    //数据为 null 不要传到后台
+    Object.keys(body).forEach((item) => {
+      if (body[item] === null || body[item] === '') {
+        delete body[item];
+      }
+    });
+    _options.body = JSON.stringify(body);
+  }
 
   return fetch(fullUrl, _options)
     .then(checkStatus)
     .then(response =>
       response.json().then(json => ({json, response}))
     ).then(({json, response}) => {
-      //错误代码需根据项目实际情况进行定义
-      if (!response.ok) {
+    //根据后台实际返回数据来定义错误格式
+    if (!response.ok) {
         return Promise.reject(json);
       }
       return json;
     }).catch((error) => {
-      console.error('请求错误');
       return Promise.reject(error);
     });
 }
 
-function postForFile(url = '', body = {} ) {
-  const form = document.createElement('form');
-  const iframe = document.createElement('iframe');
-  const iframeName = 'pageHolder';
-  const fullUrl = '/file';
-  form.method = 'post';
-  form.action = fullUrl;
-  
-  //form提交后会自动跳转打开新页面，但是页面的闪现体验不好，所以把form提交到一个隐藏的iframe中，浏览器中不会看到这这个行为，但是正常下载
-  form.target = iframeName;
-  iframe.name = iframeName;
-  iframe.style.display = 'none';
-  form.style.display = 'none';
-  body.path = url;
-  body.module = moduleName;
-  for ( const i in body) {
-    if (i) {
-      if (body[i] !== '' && body[i] !== null) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = i;
-        input.value = body[i];
-        form.appendChild(input)
-      }
-    }
-  }
-  document.body.appendChild(form);
-  document.body.appendChild(iframe);
-  form.submit();
-  setTimeout(() => {
-    document.body.removeChild(form);
-    document.body.removeChild(iframe)
-  }, 1000)
+function get(url = '', body = {}) {
+  return callApiFn(url, body, 'get')
 }
 
+function post(url = '', body = {}) {
+  return callApiFn(url, body, 'post')
+}
+function formPost (url = '', body = {}) {
+  const form = document.createElement('form');
+  form.action = url;
+  form.method = 'post';
+  form.style.display = 'none';
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'data';
+  input.value = JSON.stringify(body);
+  form.appendChild(input)
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout( () => {
+    document.body.removeChild(form);
+  }, 1000);
+} 
 const callApi = {
+  get,
   post,
-  postForFile
+  formPost
 }
 
 export default callApi;

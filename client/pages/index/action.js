@@ -1,101 +1,73 @@
+/* eslint-disable no-alert */
 import callApi from '../../utils/callApi';
-import tool from '../../utils/commonFunc';
-import { message } from 'antd'
-import React, { Component, } from 'react'
+import AppApi from '../../utils/appApi';
+import { browserHistory } from 'react-router';
 
-const urlTypeMap = {
-  queryPayPlatform: 'PAY_PLATFORM',  //支付平台
-  querySignPlatform: 'SIGN_PLATFORM',
-  queryDeductPlatform: 'DEDUCT_PLATFORM',
-  queryQuickPay: 'QUICK_PAY',
-  queryPayList: 'PAY_LIST',
-  queryPayDetail: 'PAY_DETAIL',
-  queryPOS: 'POS_PAY',
-  updateSign: 'UPDATE_SIGN',
-  updateDeduct: 'UPDATE_DEDUCT',
-  updateQuick: 'UPDATE_QUICK',
-  updatePOS: 'UPDATE_POS',
-  export4EReport: 'EXPORT_4E_REPORT',
-  exportDKReport: 'EXPORT_DK_REPORT',
-  exportQPReport: 'EXPORT_DK_REPORT',
-  exportPayListReport: 'EXPORT_PAY_LIST',
-  exportPayDetail: 'EXPORT_PAY_DETAIL',
-  exportPOS: 'EXPORT_POS',
-
-  //通道
-  queryChannel: 'CHANNEL_LIST',
-  addChannel: 'CHANNEL_ADD',
-  deleteChannel: 'CHANNEL_DELETE',
-
-  //银行
-  queryBank: 'BANK_LIST',
-  addBank: 'BANK_ADD',
-  updateBank: 'BANK_UPDATE',
-  deleteBank: 'BANK_DELETE'
+const routerOuter = (url) => {
+  browserHistory.push(url);
 }
+/**
+ * @param {*} dispatch 
+ * @param {*} requestUrl 
+ * @param {*} data 
+ * @param {*} type 
+ * @param {*} module 
+ */
+const commonCallApi =  (dispatch, requestUrl, data, type) => {
+  return callApi.post(requestUrl, data).then(res => {
+    if (res && (res.code === 1 || res.code === '0000')) {
+      if (type) {
+        return Promise.resolve(dispatch({
+          type,
+          data: res
+        }))
+      }
+      return Promise.resolve(res)
+    }
+    return Promise.reject(res)
+  });
+};
 
-const urlTransferMap = {
-  queryPayPlatform: 'web/pay/payPlatform', // 支付平台
-  querySignPlatform: 'dkapi/page4e',
-  queryDeductPlatform: 'dkapi/pagewithhold',
-  queryQuickPay: 'qpapi/pageqp',
-  queryPayList: 'odapi/pageod',
-  queryPayDetail: '/channelapi/pagechannel',
-  queryPOS: '/posapi/pagepos',
-  updateSign: 'dkapi/update4e',
-  updateDeduct: 'dkapi/updatewithhold',
-  updateQuick: 'qpapi/updateqp',
-  updatePOS: '/posapi/updatepos',
-  export4EReport: 'dkapi/export4e',
-  exportDKReport: 'dkapi/exportwithhold',
-  exportQPReport: 'qpapi/exportqp',
-  exportPayListReport: '/odapi/exportod',
-  exportPayDetailReport: '/channelapi/exportchannel',
-  exportPOS: '/posapi/exportpos',
-
-  //通道列表
-  queryChannel: 'CHANNEL_LIST',
-  addChannel: 'cHANNEL_ADD',
-  deleteChannel: 'CHANNEL_DELETE',
-
-  //银行
-  queryBank: 'BANK_LIST',
-  addBank: 'BANK_ADD',
-  updateBank: 'BANK_UPDATE',
-  deleteBank: 'BANK_DELETE'
+const handleParams = (commonParams, data, isApp) => {
+  const ct = String(new Date().getTime());
+  return isApp ? Object.assign({ct}, commonParams, {busParams: data}) : Object.assign({ct}, commonParams, data);
 }
-
-const getDataByUrl = (formData) => {  //
+/**
+ * 公共action
+ * @param requestUrl
+ * @param data
+ * @param isApp 是否是调用的app
+ * @param type  设置action的type
+ * @returns {function(*)}
+ */
+const commonAction = (requestUrl, data = {}, isApp, type) => {
+  requestUrl = isApp ? `/app${requestUrl}` : `${requestUrl}`;
   return (dispatch) => {
-    const { URL } = formData;
-    delete formData.URL;
-    return callApi.post(urlTransferMap[URL], formData)
-      .then(data => {
-        if (data.code === '0000') {
-          return Promise.resolve(dispatch(queryCb(data.data, urlTypeMap[URL])));
-        }
-        return Promise.reject(data);
-      })
+    /*return AppApi.getCommonParams().then(commonParams => {
+      data = handleParams(commonParams, data, isApp);
+      return commonCallApi(dispatch, requestUrl, data, type);
+    }, (err) => {
+      console.log(err);
+    })*/
+    return commonCallApi(dispatch, requestUrl, data, type);
   }
+};
+const bindCard = (data = {}) => {
+  return commonAction('后台提供的url', data, false, 'bindCardResult');
 }
-
-const exportReportFun = (formData) => {
+/**
+ * 使用store缓存一些数据
+ * @param {*} smsData 
+ */
+const sendSmsStore = (smsData) => {
   return (dispatch) => {
-    const { URL } = formData;
-    delete formData.URL;
-    console.log(urlTransferMap[URL]);
-    return callApi.postForFile(urlTransferMap[URL], formData)
+    return Promise.resolve(dispatch({
+      type: 'sendSmsStore',
+      data: smsData
+    }));
   }
-}
-const queryCb = (data, type) => {
-  return {
-    type,
-    data
-  }
-}
-
+} 
 export default {
-  getDataByUrl,
-  exportReportFun
+  bindCard,
+  sendSmsStore
 }
-
