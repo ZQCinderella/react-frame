@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 class TestError extends Component {
@@ -33,10 +33,13 @@ class TestError extends Component {
       throw new Error('event handle crashed');
     }
     return (
-      <div>
+      <Fragment>
+        {
+          [1, 2, 3].map(item => <span key={item}>{item}</span>)
+        }
         <div onClick={this.handleClick}>{count}</div>
         <div onClick={this.clickMan}>a man, click me</div>
-      </div>
+      </Fragment>
     )
   }
 }

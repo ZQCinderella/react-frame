@@ -67,8 +67,8 @@ const loadConfig = (options) => {
       compress: true,
       contentBase: path.resolve(appPath, 'public'),
       hot: true,
-      port: 9999,
-      host: '10.56.13.195',
+      port: 8888,
+      host: '127.0.0.1',
       publicPath: `${context}/`,
       disableHostCheck: true, // To Resolve the problem that: if changed the host config, visited page shows 'Invalid Host Header'
       historyApiFallback: {
