@@ -1,45 +1,42 @@
 import React, { Component, Fragment } from 'react';
+import { PropTypes } from 'prop-types';
 import TestError from './TestError';
 import { ErrorBoundary } from '../../components/';
 import WrapCom from './HOC';
 import App from './Context';
-//onst WrapCom = HOC.default;
+import FlattenLoadingList from './LoadingHOC';
+import ContexReplacetRedux from './ContextReplaceRedux';
+import ContextReduxApp from './Context-react-redux';
 
-const List = ({ data }) => (
-  <ul>
-    {
-      data.map(item => <li key={item.name}>{item.name}</li>)
-    }
-  </ul>
-)
-const withLoading = (BaseComponent) => {
-  /* eslint-disable */
-  return ({ isLoading, ...otherProps }) => {
-    console.log(isLoading);
-    return (
-      isLoading ?
-        <div>正在加载</div> :
-        <BaseComponent {...otherProps} />
-    )
+const TestCom = (props) => {
+  return <div>000</div>
+}
+const GenerateContext = (BaseComponent) => {
+  const InnerCom = (props, context) => {
+    return <BaseComponent {...props} router={context.router}/>
   }
+  InnerCom.contextTypes = {
+    router: PropTypes.object
+  }
+  return InnerCom;
 }
 
-/**
- * 通过propsKey 可以达到让 外层组件只接收一个props属性(一个对象)， 通过内部展开props[key] 将对象的属性透传到真实组件的props上
- * @param {*} propsKey 
- */
-const flatten = (propsKey) => {
-  return BaseComponent => {
-    return props => {
-      return <BaseComponent {...props} {...props[propsKey]} />
-    }
+class GenerateCon extends Component {
+  static contextTypes = {
+    router: PropTypes.object,
+    location: PropTypes.object
   }
 }
-const loadingList = withLoading(List);
-const FlattenLoadingList = flatten('list')(loadingList);
+class TestCon extends GenerateCon {
+  render() {
+    console.log(this.context)
+    return <div>555</div>
+  }
+}
 
 class Test extends Component {
   render() {
+    const Te = GenerateContext(TestCom);
     return (
       <Fragment>
         <TestError />
@@ -51,6 +48,10 @@ class Test extends Component {
             data: [{ name: 'fet' }, { name: 'sherry' }]
           }} />
         }
+        <ContexReplacetRedux />
+        <ContextReduxApp />
+        <Te />
+        <TestCon />
       </Fragment>
     )
   }
